@@ -1,3 +1,16 @@
 h1 {
     color: rgb(175, 14, 14);
 }
+
+.update-button {
+    color: green;
+    background-color: lightyellow;
+    margin-left: 10px;
+    margin-right: 10px;
+
+}
+
+.delete-button {
+    color: rgb(175, 14, 14);
+    background-color: rgb(241, 185, 185)
+}
