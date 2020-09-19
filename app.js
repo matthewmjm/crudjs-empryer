@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         li.append(updateButton)
     }
 
+    // UPDATE
     function bagelUpdate(event) {
         console.log(event.target.parentNode)
         event.target.parentNode.innerHTML = `
@@ -44,6 +45,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }))
     }
 
+    // After Updating Form, renders on page and removes the original li
     function handleUpdateForm(event) {
         event.preventDefault()
         console.log(event.target.children[0].value)
