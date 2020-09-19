@@ -50,20 +50,21 @@ document.addEventListener('DOMContentLoaded', ()=>{
     function handleUpdateForm(event) {
         event.preventDefault()
         const updatedBagel = event.target.children[0].value
+        const idOfUpdatedBagel = event.target.parentNode.id
         console.log(updatedBagel)
         renderBagel(updatedBagel)
         event.target.parentNode.remove()
 
         // persist
         console.log(event.target.parentNode)
-        persistBagelUpdate(event.target.parentNode.id, updatedBagel) 
-        console.log("id: ", event.target.parentNode.id)
+        persistBagelUpdate(idOfUpdatedBagel, updatedBagel) 
+        console.log("id: ", idOfUpdatedBagel)
         console.log("updated Bagel: ", updatedBagel)
 
     }
 
-    function persistBagelUpdate(id, updatedBagel) {
-        fetch(`http://bagel-api-fis.herokuapp.com/bagels/${id}`, {
+    function persistBagelUpdate(idOfUpdatedBagel, updatedBagel) {
+        fetch(`http://bagel-api-fis.herokuapp.com/bagels/${idOfUpdatedBagel}`, {
             method: "PUT",
             headers: {
                 "Accept": "application/json",
