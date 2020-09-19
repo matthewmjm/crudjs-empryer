@@ -8,14 +8,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
         .then(result => handleBagels(result))
 
     function handleBagels(bagels){
-        return bagels.forEach(bagel => renderBagel(bagel.type))
+        return bagels.forEach(bagel => renderBagel(bagel.type, bagel.id))
     }
 
     const bagelsList = document.querySelector('#bagel-ul')
 
-    function renderBagel(bagel) {
+    function renderBagel(bagel, id) {
         const li = document.createElement('li')
         li.innerText = bagel
+        li.id = id
         createUpdateButton(li)
         bagelsList.appendChild(li)
     }
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     // UPDATE
     function bagelUpdate(event) {
-        console.log(event.target.parentNode)
+        console.log(event.target.parentNode) 
         event.target.parentNode.innerHTML = `
             <form id="update-form">
             <input type='text' value='${event.target.parentNode.innerText.slice(0,-15)}'> 
@@ -48,10 +49,29 @@ document.addEventListener('DOMContentLoaded', ()=>{
     // After Updating Form, renders on page and removes the original li
     function handleUpdateForm(event) {
         event.preventDefault()
-        console.log(event.target.children[0].value)
-        renderBagel(event.target.children[0].value)
+        const updatedBagel = event.target.children[0].value
+        console.log(updatedBagel)
+        renderBagel(updatedBagel)
         event.target.parentNode.remove()
 
+        // persist
+        console.log(event.target.parentNode)
+        persistBagelUpdate(event.target.parentNode.id, updatedBagel) 
+        console.log("id: ", event.target.parentNode.id)
+        console.log("updated Bagel: ", updatedBagel)
+
+    }
+
+    function persistBagelUpdate(id, updatedBagel) {
+        fetch(`http://bagel-api-fis.herokuapp.com/bagels/${id}`, {
+            method: "PUT",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({type:updatedBagel})
+
+        })
     }
 
     // ADD FORM
